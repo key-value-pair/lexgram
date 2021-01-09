@@ -1,6 +1,11 @@
 #ifndef FINITEAUTOMATON_H
 #define FINITEAUTOMATON_H
 
+#include <vector>
+#include <string>
+
+#include "Token.h"
+
 class FiniteAutomaton {
 public:
     void setData(char* data) {
