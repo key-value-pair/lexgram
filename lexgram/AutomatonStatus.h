@@ -4,6 +4,8 @@
 #include <map>
 #include <set>
 
+#define epsilon '\0'
+
 class AutomatonStatus {
 public:
     bool hasTransfer(char ch) {
