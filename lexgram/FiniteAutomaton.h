@@ -25,7 +25,7 @@ private:
     void _convertNFAtoDFA();
     void _minimizeDFA();
 private:
-    char* data_;
+    char* data_ = nullptr;
     std::string dataFileName_;
     std::vector<AutomatonStatus*> automatonStatus_;
 };
