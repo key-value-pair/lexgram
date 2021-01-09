@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Token.h"
+#include "AutomationStatus.h"
 
 class FiniteAutomaton {
 public:
@@ -20,8 +21,13 @@ public:
     bool hasNextToken();
     Token getNextToken();
 private:
+    void _buildAutomatonStatus();
+    void _convertNFAtoDFA();
+    void _minimizeDFA();
+private:
     char* data_;
     std::string dataFileName_;
+    std::vector<AutomatonStatus*> automatonStatus_;
 };
 
 #endif // FINITEAUTOMATON_H
