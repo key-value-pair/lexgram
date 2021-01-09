@@ -5,7 +5,7 @@
 #include <string>
 
 #include "Token.h"
-#include "AutomationStatus.h"
+#include "AutomatonStatus.h"
 
 class FiniteAutomaton {
 public:
