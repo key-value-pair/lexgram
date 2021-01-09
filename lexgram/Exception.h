@@ -8,4 +8,11 @@ public:
     }
 };
 
+class NotFoundItemException : std::exception {
+public:
+    const char* what() const noexcept override {
+        return "not found item!";
+    }
+};
+
 #endif
