@@ -17,6 +17,10 @@ public:
         dataFileName_ = dataFileName;
     }
     
+    void setRegExp(const std::string& regExp) {
+        regExp_ = regExp;
+    }
+    
     std::vector<Token> getTokens();
     bool hasNextToken();
     Token getNextToken();
@@ -27,6 +31,7 @@ private:
 private:
     char* data_ = nullptr;
     std::string dataFileName_;
+    std::string regExp_;
     std::vector<AutomatonStatus*> automatonStatus_;
 };
 
