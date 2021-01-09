@@ -6,6 +6,10 @@
 
 class AutomatonStatus {
 public:
+    bool hasTransfer(char ch) {
+        return transferTables_.count(ch) == 1;
+    }
+    
     void addTransfer(char ch, AutomatonStatus* transferStatus);
     std::set<AutomatonStatus*> transfer(char ch);
     
