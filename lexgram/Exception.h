@@ -15,4 +15,11 @@ public:
     }
 };
 
+class InvalidDataException : std::exception {
+public:
+    const char* what() const noexcept override {
+        return "invalid data!";
+    }
+};
+
 #endif
