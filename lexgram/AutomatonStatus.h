@@ -4,7 +4,7 @@
 #include <map>
 #include <set>
 
-#define epsilon '\0'
+#define epsilon '\xFF'
 
 class AutomatonStatus {
 public:
