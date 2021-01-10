@@ -41,6 +41,20 @@ void testRegExp3() {
     TEST_T(root->getSubRegExpNodes()[1]->getChar() == 'b');
 }
 
+void testRegExp4() {
+    RegExp regExp {"a|b*"};
+    regExp.convertStrToRegExpNode();
+    auto root = regExp.getRoot();
+
+    TEST_T(root != nullptr);
+    TEST_T(root->nodeTypeIs(RegExpNode::Concat));
+    TEST_T(root->getSubRegExpNodes().size() == 2);
+    TEST_T(root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Normal));
+    TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'a');
+    TEST_T(root->getSubRegExpNodes()[1]->nodeTypeIs(RegExpNode::Repeated));
+}
+
 ADD_TEST(testRegExp1);
 ADD_TEST(testRegExp2);
 ADD_TEST(testRegExp3);
+ADD_TEST(testRegExp4);
