@@ -58,6 +58,10 @@ public:
     RegExpNode* getParentRegExpNode() {
         return parentNode_;
     }
+
+    bool hasParentRegExpNode() {
+        return parentNode_ != nullptr;
+    }
 private:
     NodeType nodeType_ = Normal;
     char ch_;
