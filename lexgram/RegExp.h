@@ -62,6 +62,13 @@ public:
     bool hasParentRegExpNode() {
         return parentNode_ != nullptr;
     }
+
+    RegExpNode* createParentRegExpNode() {
+        auto parent = new RegExpNode();
+        parent->addSubRegExpNode(this);
+        parentNode_ = parent;
+        return parent;
+    }
 private:
     NodeType nodeType_ = Normal;
     char ch_;

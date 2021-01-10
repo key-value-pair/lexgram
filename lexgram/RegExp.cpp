@@ -15,5 +15,60 @@ RegExp::~RegExp() {
 }
 
 void RegExp::convertStrToRegExpNode() {
-    // TODO
+    RegExpNode* curNode = nullptr;
+    for (auto it = regExpStr_.begin(); it != regExpStr_.end(); ++it) {
+        auto ch = *it;
+        switch (ch) {
+        case '|': {
+            if (curNode == nullptr) {
+                throw InvalidRegExpException();
+            }
+            auto parentNode = curNode->getParentRegExpNode();
+            if (parentNode == nullptr) {
+                parentNode = curNode->createParentRegExpNode();
+                parentNode->setNodeType(RegExpNode::Or);
+                root_ = parentNode;
+            } else {
+                if (parentNode->nodeTypeIs(RegExpNode::Or)) {
+                    // do nothing
+                } else if (parentNode->nodeTypeIs(RegExpNode::Concat)) {
+                    auto grandparent = parentNode->getParentRegExpNode();
+                    if (grandparent == nullptr) {
+                        grandparent = parentNode->createParentRegExpNode();
+                        grandparent->setNodeType(RegExpNode::Or);
+                        root_ = grandparent;
+                    }
+                    if (!grandparent->nodeTypeIs(RegExpNode::Or)) {
+                        throw InvalidRegExpException();
+                    }
+                    curNode = parentNode;
+                } else if (parentNode->nodeTypeIs(RegExpNode::Star)) {
+                    throw InvalidRegExpException();
+                }
+            }
+        }
+            break;
+        case '*': {
+            if (curNode == nullptr) {
+                throw InvalidRegExpException();
+            }
+            auto parentNode = curNode->getParentRegExpNode();
+            if (parentNode == nullptr) {
+                parentNode = curNode->createParentRegExpNode();
+                parentNode->setNodeType(RegExpNode::Star);
+                root_ = parentNode;
+                curNode = parentNode;
+            } else {
+                if (parentNode->nodeTypeIs(RegExpNode::Or)) {
+                    throw InvalidRegExpException();
+                } else if (parentNode->nodeTypeIs(RegExpNode::Concat)) {
+                } // TODO
+            }
+        }
+            break;
+        default:
+            // TODO
+            break;
+        }
+    }
 }
