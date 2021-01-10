@@ -3,5 +3,4 @@ project(lexgram C CXX)
 
 add_subdirectory(lexgram)
 
-enable_testing()
 add_subdirectory(tests)
