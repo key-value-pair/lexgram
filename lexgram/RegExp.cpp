@@ -74,10 +74,14 @@ void RegExp::convertStrToRegExpNode() {
                 root_ = curNode;
             } else {
                 auto parentNode = curNode->getParentRegExpNode();
-                if (parentNode == curNode) {
+                if (parentNode == nullptr) {
                     parentNode = curNode->createParentRegExpNode();
                     parentNode->setNodeType(RegExpNode::Concat);
                     root_ = parentNode;
+                    curNode = new RegExpNode(ch);
+                    parentNode->addSubRegExpNode(curNode);
+                    curNode->setParentRegExpNode(parentNode);
+                } else {
                     curNode = new RegExpNode(ch);
                     parentNode->addSubRegExpNode(curNode);
                     curNode->setParentRegExpNode(parentNode);
