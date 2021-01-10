@@ -1,6 +1,6 @@
 #include "test_tool.h"
 
-void runTest() {
+int runTest() {
   std::vector<AssertFail> afList;
   std::vector<bool> passList;
   
@@ -25,6 +25,8 @@ void runTest() {
   
   for (auto af : afList)
     std::cerr << af.what() << std::endl;
+
+  return (int)(afList.size() > 0);
 }
 
 std::vector<std::function<void(void)>> RegisterTest::m_functionList{};

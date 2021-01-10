@@ -56,7 +56,7 @@ class RegisterTest final {
  *   - AssertTrueDefaultMsg
  *   - ADD_TEST
  *****************************************************/
-void runTest();
+int runTest();
 
 #define AssertEqual(actual, expect, msg)			\
   do {								\
