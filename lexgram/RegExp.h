@@ -16,6 +16,17 @@ public:
     RegExpNode(const std::string& regExpStr):
         regExpStr_(regExpStr) {}
         
+    void addSubRegExpNode(RegExpNode* regExpNode) {
+        subRegExpNodes_.push_back(regExpNode);
+    }
+    
+    void setSubRegExpNodes(const std::vector<RegExpNode*>& regExpNodes) {
+        subRegExpNodes_ = regExpNodes;
+    }
+    
+    std::vector<RegExpNode*> getSubRegExpNodes() {
+        return subRegExpNodes_;
+    }
 private:
     NodeType nodeType_ = Normal;
     std::string regExpStr_;
