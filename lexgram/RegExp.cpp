@@ -44,7 +44,7 @@ void RegExp::convertStrToRegExpNode() {
                         throw InvalidRegExpException();
                     }
                     curNode = parentNode;
-                } else if (parentNode->nodeTypeIs(RegExpNode::Star)) {
+                } else if (parentNode->nodeTypeIs(RegExpNode::Repeated)) {
                     throw InvalidRegExpException();
                 }
             }
@@ -57,7 +57,7 @@ void RegExp::convertStrToRegExpNode() {
             auto parentNode = curNode->getParentRegExpNode();
             if (parentNode == nullptr) {
                 parentNode = curNode->createParentRegExpNode();
-                parentNode->setNodeType(RegExpNode::Star);
+                parentNode->setNodeType(RegExpNode::Repeated);
                 root_ = parentNode;
                 curNode = parentNode;
             } else {
