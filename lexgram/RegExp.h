@@ -2,6 +2,7 @@
 #define REGEXP_H
 
 #include <string>
+#include <vector>
 
 class RegExpNode {
 public:
