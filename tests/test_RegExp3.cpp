@@ -14,13 +14,13 @@ int main(int argc, char* argv[]) {
     if (root->getSubRegExpNodes().size() != 2) {
         return 3;
     }
-    if (!root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Concat)) {
+    if (!root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Repeated)) {
         return 4;
     }
     if (root->getSubRegExpNodes()[1]->getChar() != 'b') {
         return 5;
     }
-    if (root->getSubRegExpNodes()[1]->nodeTypeIs(RegExpNode::Normal)) {
+    if (!root->getSubRegExpNodes()[1]->nodeTypeIs(RegExpNode::Normal)) {
         return 6;
     }
 
