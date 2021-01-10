@@ -8,15 +8,16 @@ class RegExpNode {
 public:
     enum NodeType {
         Normal,
-        Star,
-        Or
+        Repeated,
+        Or,
+        Concat
     };
     
     RegExpNode() = default;
     RegExpNode(NodeType nodeType):
         nodeType_(nodeType) {}
-    RegExpNode(const std::string& regExpStr):
-        regExpStr_(regExpStr) {}
+    RegExpNode(char ch):
+        ch_(ch) {}
     
     void setNodeType(NodeType nodeType) {
         nodeType_ = nodeType;
@@ -30,8 +31,12 @@ public:
         return nodeType_ == nodeType;
     }
     
-    void setRegExpStr(const std::string& regExpStr) {
-        regExpStr_ = regExpStr;
+    void setChar(char ch) {
+        ch_ = ch;
+    }
+    
+    char getChar() {
+        return ch_;
     }
         
     void addSubRegExpNode(RegExpNode* regExpNode) {
@@ -47,7 +52,7 @@ public:
     }
 private:
     NodeType nodeType_ = Normal;
-    std::string regExpStr_;
+    char ch_;
     std::vector<RegExpNode*> subRegExpNodes_;
 };
 
