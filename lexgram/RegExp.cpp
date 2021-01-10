@@ -5,7 +5,7 @@ RegExp::~RegExp() {
     std::stack<RegExpNode*> curNodes;
     curNodes.push(root_);
     while (curNodes.size()) {
-        curNode = curNodes.top();
+        auto curNode = curNodes.top();
         curNodes.pop();
         for (auto subNode : curNode->getSubRegExpNodes()) {
             curNodes.push(subNode);
