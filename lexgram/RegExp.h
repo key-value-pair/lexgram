@@ -41,10 +41,10 @@ public:
     ~RegExp();
     void convertStrToRegExpNode();
     RegExpNode* getRoot() {
-        return root;
+        return root_;
     }
 private:
     std::string regExpStr_;
-    RegExpNode* root;
+    RegExpNode* root_ = nullptr;
 };
 #endif // REGEXP_H
