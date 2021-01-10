@@ -7,10 +7,10 @@
 class RegExpNode {
 public:
     enum NodeType {
-        Normal,
-        Repeated,
-        Or,
-        Concat
+        Normal, // 'a' 'b' ...
+        Repeated, // 'a*' 'b*' ...
+        Or, // 'a|b' 'b|c' ...
+        Concat // 'a.b' or 'ab' ...
     };
     
     RegExpNode() = default;
