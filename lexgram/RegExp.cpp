@@ -1,4 +1,6 @@
 #include <stack>
+
+#include "Exception.h"
 #include "RegExp.h"
 
 RegExp::~RegExp() {
