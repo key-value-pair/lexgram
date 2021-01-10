@@ -10,7 +10,7 @@ public:
         Normal,
         Star,
         Or
-    }
+    };
     
     RegExpNode(NodeType nodeType):
         nodeType_(nodeType) {}
