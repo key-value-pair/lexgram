@@ -1,36 +1,44 @@
 #include "RegExp.h"
 
-int main(int argc, char* argv[]) {
+bool testRegExp1() {
     RegExp regExp{"abc"};
     regExp.convertStrToRegExpNode();
     auto root = regExp.getRoot();
     
     if (root == nullptr) {
-        return 1;
+        return false;
     }
     if (!root->nodeTypeIs(RegExpNode::Concat)) {
-        return 2;
+        return false;
     }
     if (root->getSubRegExpNodes().size() != 3) {
-        return 3;
+        return false;
     }
     if (root->getSubRegExpNodes()[0]->getChar() != 'a') {
-        return 4;
+        return false;
     }
     if (!root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Normal)) {
-        return 5;
+        return false;
     }
     if (root->getSubRegExpNodes()[1]->getChar() != 'b') {
-        return 6;
+        return false;
     }
     if (!root->getSubRegExpNodes()[1]->nodeTypeIs(RegExpNode::Normal)) {
-        return 7;
+        return false;
     }
     if (root->getSubRegExpNodes()[2]->getChar() != 'c') {
-        return 8;
+        return false;
     }
     if (!root->getSubRegExpNodes()[2]->nodeTypeIs(RegExpNode::Normal)) {
-        return 9;
+        return false;
+    }
+    
+    return true;
+}
+
+int main(int argc, char* argv[]) {
+    if (!testRegExp1()) {
+        return 1;
     }
     
     return 0;
