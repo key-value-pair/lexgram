@@ -50,10 +50,19 @@ public:
     std::vector<RegExpNode*> getSubRegExpNodes() {
         return subRegExpNodes_;
     }
+
+    void setParentRegExpNode(RegExpNode* parentNode) {
+        parentNode_ = parentNode;
+    }
+
+    RegExpNode* getParentRegExpNode() {
+        return parentNode_;
+    }
 private:
     NodeType nodeType_ = Normal;
     char ch_;
     std::vector<RegExpNode*> subRegExpNodes_;
+    RegExpNode* parentNode_ = nullptr;
 };
 
 class RegExp {
