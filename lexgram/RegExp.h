@@ -37,7 +37,13 @@ class RegExp {
 public:
     RegExp(const std::string& regExpStr):
         regExpStr_(regExpStr) {}
+    ~RegExp();
+    void convertStrToRegExpNode();
+    RegExpNode* getRoot() {
+        return root;
+    }
 private:
     std::string regExpStr_;
+    RegExpNode* root;
 };
 #endif // REGEXP_H
