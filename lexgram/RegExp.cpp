@@ -69,7 +69,20 @@ void RegExp::convertStrToRegExpNode() {
         }
             break;
         default:
-            // TODO
+            if (curNode == nullptr) {
+                curNode = new RegExpNode(ch);
+                root_ = curNode;
+            } else {
+                auto parentNode = curNode->getParentRegExpNode();
+                if (parentNode == curNode) {
+                    parentNode = curNode->createParentRegExpNode();
+                    parentNode->setNodeType(RegExpNode::Concat);
+                    root_ = parentNode;
+                    curNode = new RegExpNode(ch);
+                    parentNode->addSubRegExpNode(curNode);
+                    curNode->setParentRegExpNode(parentNode);
+                }
+            }
             break;
         }
     }
