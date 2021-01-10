@@ -26,7 +26,7 @@ void testRegExp2() {
     TEST_T(root->nodeTypeIs(RegExpNode::Or));
     TEST_T(root->getSubRegExpNodes().size() == 2);
     TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'a');
-    TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'b');
+    TEST_T(root->getSubRegExpNodes()[1]->getChar() == 'b');
 }
 
 void testRegExp3() {
