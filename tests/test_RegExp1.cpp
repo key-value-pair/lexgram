@@ -6,15 +6,15 @@ void testRegExp1() {
     regExp.convertStrToRegExpNode();
     auto root = regExp.getRoot();
 
-    AssertEqualDefaultMsg(root != nullptr);
-    AssertEqualDefaultMsg(root->nodeTypeIs(RegExpNode::Concat));
-    AssertEqualDefaultMsg(root->getSubRegExpNodes().size() == 3);
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[0]->getChar() == 'a');
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Normal));
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[1]->getChar() == 'b');
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[1]->nodeTypeIs(RegExpNode::Normal));
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[2]->getChar() == 'c');
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[2]->nodeTypeIs(RegExpNode::Normal));
+    TEST_T(root != nullptr);
+    TEST_T(root->nodeTypeIs(RegExpNode::Concat));
+    TEST_T(root->getSubRegExpNodes().size() == 3);
+    TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'a');
+    TEST_T(root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Normal));
+    TEST_T(root->getSubRegExpNodes()[1]->getChar() == 'b');
+    TEST_T(root->getSubRegExpNodes()[1]->nodeTypeIs(RegExpNode::Normal));
+    TEST_T(root->getSubRegExpNodes()[2]->getChar() == 'c');
+    TEST_T(root->getSubRegExpNodes()[2]->nodeTypeIs(RegExpNode::Normal));
 }
 
 void testRegExp2() {
@@ -22,11 +22,11 @@ void testRegExp2() {
     regExp.convertStrToRegExpNode();
     auto root = regExp.getRoot();
 
-    AssertEqualDefaultMsg(root != nullptr);
-    AssertEqualDefaultMsg(root->nodeTypeIs(RegExpNode::Or));
-    AssertEqualDefaultMsg(root->getSubRegExpNodes().size() == 2);
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[0]->getChar() == 'a');
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[0]->getChar() == 'b');
+    TEST_T(root != nullptr);
+    TEST_T(root->nodeTypeIs(RegExpNode::Or));
+    TEST_T(root->getSubRegExpNodes().size() == 2);
+    TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'a');
+    TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'b');
 }
 
 void testRegExp3() {
@@ -34,11 +34,11 @@ void testRegExp3() {
     regExp.convertStrToRegExpNode();
     auto root = regExp.getRoot();
 
-    AssertEqualDefaultMsg(root != nullptr);
-    AssertEqualDefaultMsg(root->nodeTypeIs(RegExpNode::Concat));
-    AssertEqualDefaultMsg(root->getSubRegExpNodes().size() == 2);
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Repeated));
-    AssertEqualDefaultMsg(root->getSubRegExpNodes()[1]->getChar() == 'b');
+    TEST_T(root != nullptr);
+    TEST_T(root->nodeTypeIs(RegExpNode::Concat));
+    TEST_T(root->getSubRegExpNodes().size() == 2);
+    TEST_T(root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Repeated));
+    TEST_T(root->getSubRegExpNodes()[1]->getChar() == 'b');
 }
 
 ADD_TEST(testRegExp1);

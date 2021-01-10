@@ -80,6 +80,12 @@ void runTest();
 #define AssertTrueDefaultMsg(cond)			\
   AssertTrue(cond, "Expect<true>, Actual<false>")
 
+#define TEST_T(cond)                                            \
+    AssertTrue(cond, #cond ", Expect<true>, Actual<false>")
+
+#define TEST_F(cond)                                            \
+    AssertTure(!(cond), #cond ", Expect<false>, Actual<true>")
+
 #define ADD_TEST(fun)					\
   static const RegisterTest RegisterTest##fun{fun};
 
