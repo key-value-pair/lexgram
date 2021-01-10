@@ -12,6 +12,7 @@ public:
         Or
     };
     
+    RegExpNode() = default;
     RegExpNode(NodeType nodeType):
         nodeType_(nodeType) {}
     RegExpNode(const std::string& regExpStr):
