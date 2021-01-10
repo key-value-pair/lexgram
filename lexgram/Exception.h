@@ -24,4 +24,11 @@ public:
     }
 };
 
+class InvalidRegExpException : std::exception {
+public:
+    const char* what() const noexcept override {
+        return "invalid regular express!";
+    }
+};
+
 #endif
