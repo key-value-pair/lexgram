@@ -12,10 +12,19 @@ public:
         Or
     };
     
+    RegExpNode() = default;
     RegExpNode(NodeType nodeType):
         nodeType_(nodeType) {}
     RegExpNode(const std::string& regExpStr):
         regExpStr_(regExpStr) {}
+    
+    void setNodeType(NodeType nodeType) {
+        nodeType_ = nodeType;
+    }
+    
+    void setRegExpStr(const std::string& regExpStr) {
+        regExpStr_ = regExpStr;
+    }
         
     void addSubRegExpNode(RegExpNode* regExpNode) {
         subRegExpNodes_.push_back(regExpNode);
