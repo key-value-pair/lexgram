@@ -16,6 +16,22 @@ public:
         nodeType_(nodeType) {}
     RegExpNode(const std::string& regExpStr):
         regExpStr_(regExpStr) {}
+    
+    void setNodeType(NodeType nodeType) {
+        nodeType_ = nodeType;
+    }
+    
+    NodeType getNodeType() {
+        return nodeType_;
+    }
+    
+    bool nodeTypeIs(NodeType nodeType) {
+        return nodeType_ == nodeType;
+    }
+    
+    void setRegExpStr(const std::string& regExpStr) {
+        regExpStr_ = regExpStr;
+    }
         
     void addSubRegExpNode(RegExpNode* regExpNode) {
         subRegExpNodes_.push_back(regExpNode);
