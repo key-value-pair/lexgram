@@ -1,3 +1,6 @@
+#include "RegExp.h"
+
 int main(int argc, char* argv[]) {
-    return 0;
+    RegExpNode node {'a'};
+    return !node.nodeTypeIs(RegExpNode::Normal);
 }
