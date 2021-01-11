@@ -42,6 +42,7 @@ public:
     RegExpNode* createOrNode();
     RegExpNode* createNormalNode(char ch);
     RegExpNode* createRepeatedNode();
+    RegExpNode* createConcatNode();
         
     void addSubRegExpNode(RegExpNode* regExpNode) {
         subRegExpNodes_.push_back(regExpNode);

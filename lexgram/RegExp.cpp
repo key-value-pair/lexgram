@@ -88,6 +88,31 @@ RegExpNode* RegExpNode::createRepeatedNode() {
     }
 }
 
+RegExpNode* RegExpNode::createConcatNode() {
+    if (hasParentRegExpNode()) {
+        auto parent = getParentRegExpNode();
+        if (parent-nodeTypeIs(Concat)) {
+            return parent;
+        }
+
+        if (parent->nodeTypeIs(Repeated)) {
+            return parent->createConcatNode();
+        }
+
+        if (parent->nodeTypeIs(Or)) {
+            parent->removeSubRegExpNode(this);
+            auto newParent = createParentRegExpNode();
+            newParent->setNodeType(Concat);
+            newParent->setParentRegExpNode(parent);
+            parent->addSubRegExpNode(newParent);
+            return newParent;
+    } else {
+        auto parent = createParentRegExpNode();
+        parent->setNodeType(Concat);
+        return parent;
+    }
+}
+
 RegExp::~RegExp() {
     std::stack<RegExpNode*> curNodes;
     curNodes.push(root_);
@@ -103,6 +128,7 @@ RegExp::~RegExp() {
 
 void RegExp::convertStrToRegExpNode() {
     RegExpNode* curNode = nullptr;
+    char prevCh;
     for (auto it = regExpStr_.begin(); it != regExpStr_.end(); ++it) {
         auto ch = *it;
         switch (ch) {
@@ -129,12 +155,17 @@ void RegExp::convertStrToRegExpNode() {
                 curNode = new RegExpNode(ch);
                 root_ = curNode;
             } else {
+                if (prevCh != '|') {
+                    auto curParentNode = curNode->createConcatNode();
+                    curNode = curParentNode->getRightmostSubRegExpNode();
+                }
                 auto curParentNode = curNode->createNormalNode(ch);
                 curNode = curParentNode->getRightmostSubRegExpNode();
             }
         }
             break;
         }
+        prevCh = ch;
     }
 
     if (curNode == nullptr) {
