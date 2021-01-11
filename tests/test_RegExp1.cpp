@@ -47,7 +47,7 @@ void testRegExp4() {
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
-    TEST_T(root->nodeTypeIs(RegExpNode::Concat));
+    TEST_T(root->nodeTypeIs(RegExpNode::Or));
     TEST_T(root->getSubRegExpNodes().size() == 2);
     TEST_T(root->getSubRegExpNodes()[0]->nodeTypeIs(RegExpNode::Normal));
     TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'a');
