@@ -86,6 +86,15 @@ int runTest();
 #define TEST_F(cond)                                            \
     AssertTure(!(cond), #cond ", Expect<false>, Actual<true>")
 
+#define NO_EXCEPTION(CODE_SEG)                          \
+    do {                                                \
+        try {                                           \
+            CODE_SEG;                                   \
+        } catch(...) {                                  \
+            AssertTrue(false, "catch exception!");      \
+        }                                               \
+    } while (0)
+
 #define ADD_TEST(fun)					\
   static const RegisterTest RegisterTest##fun{fun};
 

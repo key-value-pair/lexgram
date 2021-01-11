@@ -3,7 +3,7 @@
 
 void testRegExp1() {
     RegExp regExp{"abc"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
@@ -19,7 +19,7 @@ void testRegExp1() {
 
 void testRegExp2() {
     RegExp regExp{"a|b"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
@@ -31,7 +31,7 @@ void testRegExp2() {
 
 void testRegExp3() {
     RegExp regExp{"a*b"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
@@ -46,7 +46,7 @@ void testRegExp3() {
 
 void testRegExp4() {
     RegExp regExp {"a|b*"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
@@ -64,7 +64,7 @@ void testRegExp4() {
 
 void testRegExp5() {
     RegExp regExp {"a|b|c"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
@@ -77,7 +77,7 @@ void testRegExp5() {
 
 void testRegExp6() {
     RegExp regExp {"a|bc"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
@@ -94,7 +94,7 @@ void testRegExp6() {
 
 void testRegExp7() {
     RegExp regExp {"ab|c"};
-    regExp.convertStrToRegExpNode();
+    NO_EXCEPTION(regExp.convertStrToRegExpNode());
     auto root = regExp.getRoot();
 
     TEST_T(root != nullptr);
