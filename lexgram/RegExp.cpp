@@ -37,20 +37,15 @@ RegExpNode* RegExpNode::createNormalNode(char ch) {
         }
 
         // parent->nodeTypeIs(Or) == true
-        if (nodeTypeIs(Normal) || nodeTypeIs(Repeated)) {
-            parent->removeSubRegExpNode(this);
-            auto newParentNode = createParentRegExpNode();
-            auto normalNode = new RegExpNode(ch);
-            newParentNode->addSubRegExpNode(normalNode);
-            normalNode->setParentRegExpNode(newParentNode);
-            return newParentNode;
-        }
-
-        if (nodeTypeIs(Concat)) {
+        if (nodeTypeIs(Normal)) {
             auto normalNode = new RegExpNode(ch);
             parent->addSubRegExpNode(normalNode);
             normalNode->setParentRegExpNode(parent);
             return parent;
+        }
+
+        if (nodeTypeIs(Concat) || nodeTypeIs(Repeated)) {
+            throw InvalidRegExpException();
         }
 
         if (nodeTypeIs(Or)) {
