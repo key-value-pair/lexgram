@@ -86,7 +86,7 @@ RegExpNode* RegExpNode::createRepeatedNode() {
 RegExpNode* RegExpNode::createConcatNode() {
     if (hasParentRegExpNode()) {
         auto parent = getParentRegExpNode();
-        if (parent-nodeTypeIs(Concat)) {
+        if (parent->nodeTypeIs(Concat)) {
             return parent;
         }
 
