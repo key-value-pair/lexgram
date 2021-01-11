@@ -7,7 +7,7 @@ RegExpNode* RegExpNode::createOrNode() {
     if (hasParentRegExpNode()) {
         auto parent = getParentRegExpNode();
         if (parent->nodeTypeIs(Or)) {
-            return this->parent;
+            return parent;
         } else {
             return parent->createOrNode();
         }
