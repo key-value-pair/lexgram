@@ -58,7 +58,7 @@ public:
     void removeSubRegExpNode(RegExpNode* regExpNode) {
         for (auto it = subRegExpNodes_.begin(); it != subRegExpNodes_.end(); ++it) {
             if (*it == regExpNode) {
-                it->setParentRegExpNode(nullptr);
+                (*it)->setParentRegExpNode(nullptr);
                 subRegExpNodes_.erase(it);
                 break;
             }

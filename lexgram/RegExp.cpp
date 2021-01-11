@@ -78,7 +78,7 @@ RegExpNode* RegExpNode::createRepeatedNode() {
             auto newParent = createParentRegExpNode();
             newParent->setNodeType(Repeated);
             newParent->setParentRegExpNode(parent);
-            parent->addSubRegExpNode();
+            parent->addSubRegExpNode(newParent);
             return parent;
         }
     } else {
