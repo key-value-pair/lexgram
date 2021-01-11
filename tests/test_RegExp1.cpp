@@ -121,8 +121,8 @@ void testRegExp8() {
     auto star = root->getSubRegExpNodes()[0];
     TEST_T(star->nodeTypeIs(RegExpNode::Repeated));
 
-    TEST_T(concat->getSubRegExpNodes().size() == 1);
-    TEST_T(concat->getSubRegExpNodes()[0]->getChar() == 'a');
+    TEST_T(star->getSubRegExpNodes().size() == 1);
+    TEST_T(star->getSubRegExpNodes()[0]->getChar() == 'a');
 }
 
 ADD_TEST(testRegExp1);
