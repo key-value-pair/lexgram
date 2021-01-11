@@ -56,9 +56,9 @@ void testRegExp4() {
     TEST_T(root->getSubRegExpNodes()[0]->getChar() == 'a');
 
     auto star = root->getSubRegExpNodes()[1];
-    TEST_T(start->nodeTypeIs(RegExpNode::Repeated));
-    TEST_T(start->getSubRegExpNodes().size() == 1);
-    TEST_T(start->getSubRegExpNodes()[0]->getChar() == 'b');
+    TEST_T(star->nodeTypeIs(RegExpNode::Repeated));
+    TEST_T(star->getSubRegExpNodes().size() == 1);
+    TEST_T(star->getSubRegExpNodes()[0]->getChar() == 'b');
     
 }
 
