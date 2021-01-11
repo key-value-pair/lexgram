@@ -106,6 +106,7 @@ RegExpNode* RegExpNode::createConcatNode() {
             newParent->setParentRegExpNode(parent);
             parent->addSubRegExpNode(newParent);
             return newParent;
+        }
     } else {
         auto parent = createParentRegExpNode();
         parent->setNodeType(Concat);
