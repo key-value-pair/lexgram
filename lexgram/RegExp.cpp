@@ -3,6 +3,91 @@
 #include "Exception.h"
 #include "RegExp.h"
 
+RegExpNode* RegExpNode::createOrNode() {
+    if (hasParentRegExpNode()) {
+        auto parent = getParentRegExpNode();
+        if (parent->nodeTypeIs(Or)) {
+            return this->parent;
+        } else {
+            return parent->createOrNode();
+        }
+    } else {
+        auto parent = createParentRegExpNode();
+        parent->setNodeType(Or);
+        return parent;
+    }
+}
+
+RegExpNode* RegExpNode::createNormalNode(char ch) {
+    if (hasParentRegExpNode()) {
+        auto parent = getParentRegExpNode();
+        if (parent->nodeTypeIs(Concat)) {
+            auto normalNode = new RegExpNode(ch);
+            normalNode->setParentRegExpNode(parent);
+            parent->addSubRegExpNode(normalNode);
+            return parent;
+        }
+
+        if (parent->nodeTypeIs(Repeated)) {
+            return parent->createNormalNode(ch);
+        }
+
+        if (parent->nodeTypeIs(Normal)) {
+            throw InvalidRegExpException();
+        }
+
+        // parent->nodeTypeIs(Or) == true
+        if (nodeTypeIs(Normal) || nodeTypeIs(Repeated)) {
+            parent->removeSubRegExpNode(this);
+            auto newParentNode = createParentRegExpNode();
+            auto normalNode = new RegExpNode(ch);
+            newParentNode->addSubRegExpNode(normalNode);
+            normalNode->setParentRegExpNode(newParentNode);
+            return newParentNode;
+        }
+
+        if (nodeTypeIs(Concat)) {
+            auto normalNode = new RegExpNode(ch);
+            parent->addSubRegExpNode(normalNode);
+            normalNode->setParentRegExpNode(parent);
+            return parent;
+        }
+
+        if (nodeTypeIs(Or)) {
+            throw InvalidRegExpException();
+        }
+    } else {
+        auto parent = createParentRegExpNode();
+        parent->setNodeType(Concat);
+        auto normalNode = new RegExpNode(ch);
+        normalNode->setParentRegExpNode(parent);
+        parent->addSubRegExpNode(normalNode);
+        return parent;
+    }
+}
+
+RegExpNode* RegExpNode::createRepeatedNode() {
+    if (hasParentRegExpNode()) {
+        auto parent = getParentRegExpNode();
+        if (parent->nodeTypeIs(Repeated)) {
+            return parent;
+        }
+
+        if (nodeTypeIs(Normal)) {
+            parent->removeSubRegExpNode(this);
+            auto newParent = createParentRegExpNode();
+            newParent->setNodeType(Repeated);
+            newParent->setParentRegExpNode(parent);
+            parent->addSubRegExpNode();
+            return parent;
+        }
+    } else {
+        auto parent = createParentRegExpNode();
+        parent->setNodeType(Repeated);
+        return parent;
+    }
+}
+
 RegExp::~RegExp() {
     std::stack<RegExpNode*> curNodes;
     curNodes.push(root_);
@@ -25,69 +110,39 @@ void RegExp::convertStrToRegExpNode() {
             if (curNode == nullptr) {
                 throw InvalidRegExpException();
             }
-            auto parentNode = curNode->getParentRegExpNode();
-            if (parentNode == nullptr) {
-                parentNode = curNode->createParentRegExpNode();
-                parentNode->setNodeType(RegExpNode::Or);
-                root_ = parentNode;
-            } else {
-                if (parentNode->nodeTypeIs(RegExpNode::Or)) {
-                    // do nothing
-                } else if (parentNode->nodeTypeIs(RegExpNode::Concat)) {
-                    auto grandparent = parentNode->getParentRegExpNode();
-                    if (grandparent == nullptr) {
-                        grandparent = parentNode->createParentRegExpNode();
-                        grandparent->setNodeType(RegExpNode::Or);
-                        root_ = grandparent;
-                    }
-                    if (!grandparent->nodeTypeIs(RegExpNode::Or)) {
-                        throw InvalidRegExpException();
-                    }
-                    curNode = parentNode;
-                } else if (parentNode->nodeTypeIs(RegExpNode::Repeated)) {
-                    throw InvalidRegExpException();
-                }
-            }
+
+            auto curParentNode = curNode->createOrNode();
+            curNode = curParentNode->getRightmostSubRegExpNode();
         }
             break;
         case '*': {
             if (curNode == nullptr) {
                 throw InvalidRegExpException();
             }
-            auto parentNode = curNode->getParentRegExpNode();
-            if (parentNode == nullptr) {
-                parentNode = curNode->createParentRegExpNode();
-                parentNode->setNodeType(RegExpNode::Repeated);
-                root_ = parentNode;
-                curNode = parentNode;
-            } else {
-                if (parentNode->nodeTypeIs(RegExpNode::Or)) {
-                    throw InvalidRegExpException();
-                } else if (parentNode->nodeTypeIs(RegExpNode::Concat)) {
-                } // TODO
-            }
+
+            auto curParentNode = curNode->createRepeatedNode();
+            curNode = curParentNode->getRightmostSubRegExpNode();
         }
             break;
-        default:
+        default: {
             if (curNode == nullptr) {
                 curNode = new RegExpNode(ch);
                 root_ = curNode;
             } else {
-                auto parentNode = curNode->getParentRegExpNode();
-                if (parentNode == nullptr) {
-                    parentNode = curNode->createParentRegExpNode();
-                    parentNode->setNodeType(RegExpNode::Concat);
-                    root_ = parentNode;
-                    curNode = new RegExpNode(ch);
-                    parentNode->addSubRegExpNode(curNode);
-                    curNode->setParentRegExpNode(parentNode);
-                } else {
-                    curNode = new RegExpNode(ch);
-                    parentNode->addSubRegExpNode(curNode);
-                    curNode->setParentRegExpNode(parentNode);
-                }
+                auto curParentNode = curNode->createNormalNode(ch);
+                curNode = curParentNode->getRightmostSubRegExpNode();
             }
+        }
             break;
         }
+    }
+
+    if (curNode == nullptr) {
+        throw InvalidRegExpException();
+    }
+
+    while (curNode != nullptr) {
+        root_ = curNode;
+        curNode = curNode->getParentRegExpNode();
     }
 }

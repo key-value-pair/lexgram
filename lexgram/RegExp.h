@@ -38,9 +38,31 @@ public:
     char getChar() {
         return ch_;
     }
+
+    RegExpNode* createOrNode();
+    RegExpNode* createNormalNode(char ch);
+    RegExpNode* createRepeatedNode();
         
     void addSubRegExpNode(RegExpNode* regExpNode) {
         subRegExpNodes_.push_back(regExpNode);
+    }
+
+    RegExpNode* getRightmostSubRegExpNode() {
+        if (subRegExpNodes_.size() == 0) {
+            return nullptr;
+        }
+
+        return subRegExpNodes_.back();
+    }
+
+    void removeSubRegExpNode(RegExpNode* regExpNode) {
+        for (auto it = subRegExpNodes_.begin(); it != subRegExpNodes_.end(); ++it) {
+            if (*it == regExpNode) {
+                it->setParentRegExpNode(nullptr);
+                subRegExpNodes_.erase(it);
+                break;
+            }
+        }
     }
     
     void setSubRegExpNodes(const std::vector<RegExpNode*>& regExpNodes) {
